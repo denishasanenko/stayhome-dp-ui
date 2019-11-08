@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useState} from 'react';
 import logo from './logo.svg';
 import './App.css';
 import Board from "./Board/Board";
@@ -8,13 +8,18 @@ import {
   BrowserRouter,
   Switch,
   Route,
-  Link
+  Link, HashRouter
 } from "react-router-dom"
 
 function App() {
+
+  const [email, setEmail] = useState('')
+  const [password, setPassword] = useState('')
+
+
   return (
     <div className="App">
-      <BrowserRouter>
+      <HashRouter>
       <header className="App-header">
         <p>
           Edit <code>src/App.js</code> and save to reload.
@@ -27,11 +32,12 @@ function App() {
           <Route path="/list">
             <BoardsList/>
           </Route>
-          <Route path="/">
-            <Main />
+          <Route path="/" render={(props) => (
+              <Main {...props} />
+          )}>
           </Route>
         </Switch>
-      </BrowserRouter>
+      </HashRouter>
     </div>
   );
 }
