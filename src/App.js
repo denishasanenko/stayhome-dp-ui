@@ -48,7 +48,7 @@ function App() {
         <HashRouter>
           <header className="App-header">
             Vedrospective app
-              <a onClick={logOut}>Log out</a>
+              <a href="#" onClick={logOut}>Log out</a>
           </header>
           <Switch>
             <PrivateRoute path="/boards/:id">

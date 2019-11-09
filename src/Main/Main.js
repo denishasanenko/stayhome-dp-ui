@@ -16,7 +16,7 @@ function Main() {
 
     let history = useHistory();
 
-    const [loginUser, { data, error, loading }] = useMutation(LOGIN_MUTATION);
+    const [loginUser, { data, error }] = useMutation(LOGIN_MUTATION);
 
     let authorized = true;
     try {
