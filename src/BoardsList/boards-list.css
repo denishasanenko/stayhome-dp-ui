@@ -1,0 +1,8 @@
+.board{
+    width: 200px;
+    height: 100px;
+    background: #ddd;
+    border: 1px solid #bbb;
+    float: left;
+    margin-right: 20px;
+}

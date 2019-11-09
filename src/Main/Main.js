@@ -1,7 +1,8 @@
 import React, {useState} from 'react';
-import {Link} from "react-router-dom";
+import {Link, useHistory} from "react-router-dom";
 import { useMutation } from "react-apollo";
 import { gql } from "apollo-boost";
+import jwt from "jsonwebtoken";
 
 const LOGIN_MUTATION = gql`
     mutation signIn($input: SignInput!) {
@@ -9,14 +10,25 @@ const LOGIN_MUTATION = gql`
     }
 `;
 
-function Main(props) {
+function Main() {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
 
+    let history = useHistory();
+
     const [loginUser, { data, error, loading }] = useMutation(LOGIN_MUTATION);
 
-    if (localStorage.getItem('jwt')) {
-        props.history.push('/list')
+    let authorized = true;
+    try {
+        const token = localStorage.getItem('jwt');
+        jwt.verify(token, 'secret')
+    } catch (e) {
+        authorized = false;
+    }
+
+    if (authorized) {
+        console.log('Logged in');
+        history.push('/boards')
     }
 
     if (error) {
@@ -26,7 +38,7 @@ function Main(props) {
     if (data) {
         localStorage.setItem('jwt', data.signIn);
         console.log(data);
-        props.history.push('/list')
+        history.push('/boards')
     }
 
     const submitForm = event => {

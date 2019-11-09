@@ -1,7 +1,8 @@
 import React from 'react';
 import {Query} from "@apollo/react-components";
 import {gql} from "apollo-boost";
-
+import { Link } from 'react-router-dom';
+import './boards-list.css';
 
 const GET_CHARACTERS = gql`
     query listBoards {
@@ -35,10 +36,12 @@ function BoardsList() {
                         return (
                             <div className="characters">
                                 {data.allBoards.map(board => (
-                                    <div key={board.name} className="board">
-                                        <p>{board.name}</p>
-                                        <p>{board.posted_by.email}</p>
-                                    </div>
+                                    <Link to={`/boards/${board.id}`}>
+                                        <div className="board">
+                                            <p>{board.name}</p>
+                                            <p>{board.posted_by.email}</p>
+                                        </div>
+                                    </Link>
                                 ))}
                             </div>
                         );
