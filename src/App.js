@@ -44,12 +44,17 @@ function App() {
 
   return (
     <div className="App">
+      <header>
+          <div></div>
+          <div>
+              <img src="/logo.png" className="App-logo" alt="logo" />
+          </div>
+          <div>
+              <p onClick={logOut}>Log out</p>
+          </div>
+      </header>
       <ApolloProvider client={client}>
         <HashRouter>
-          <header className="App-header">
-            Vedrospective app
-              <p onClick={logOut}>Log out</p>
-          </header>
           <Switch>
             <PrivateRoute path="/boards/:id">
               <Board />

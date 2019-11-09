@@ -49,7 +49,6 @@ function Main() {
 
     return (
             <div className="Main">
-                <header className="Main-header">
                     <form onSubmit={submitForm}>
                         <div>
                             <label>
@@ -69,7 +68,6 @@ function Main() {
                         Main page
                     </p>
                     <Link to="/board">Go to board</Link>
-                </header>
             </div>
     );
 

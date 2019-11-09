@@ -1,19 +1,10 @@
-.board{
-    width: 300px;
-    height: 180px;
+.column {
+    width: 402px;
+    min-height: 180px;
     background: #FFFFFF;
     border: 1px solid #CCCCCC;
     border-radius: 3px;
     box-shadow: 0 10px 10px rgba(0,0,0,0.1);
     float: left;
     margin-right: 20px;
-}
-
-.board-add {
-    cursor: pointer;
-    opacity: 0.5;
-}
-
-.board-add:hover {
-    opacity: 1;
 }

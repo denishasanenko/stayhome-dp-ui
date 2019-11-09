@@ -2,6 +2,7 @@ import React from 'react';
 import { Link, useParams } from 'react-router-dom';
 import {Query} from "@apollo/react-components";
 import {gql} from "apollo-boost";
+import "./board.css"
 
 function Board() {
 
@@ -28,7 +29,6 @@ function Board() {
 
     return (
         <div className="Board">
-            <header className="Board-header">
                 <Link to="/list">Back boards list</Link>
                 <Query query={GET_CHARACTERS} variables={{id: id}}>
                     {({ loading, error, data }) => {
@@ -40,11 +40,18 @@ function Board() {
                                 <p>
                                     Board page {data.getBoard.name}
                                 </p>
+
+                                <div className="canvas">
+                                    {data.getBoard.columns.map((column) => {
+                                        return <div className="column">
+                                            <p><b>{column.title}</b></p>
+                                        </div>
+                                    })}
+                                </div>
                             </div>
                         );
                     }}
                 </Query>
-            </header>
         </div>
     );
 }

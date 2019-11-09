@@ -24,7 +24,6 @@ const GET_CHARACTERS = gql`
 function BoardsList() {
     return (
         <div className="BoardsList">
-            <header className="BoardsList-header">
                 <p>
                     Boards list page
                 </p>
@@ -34,7 +33,7 @@ function BoardsList() {
                         if (error) return `Error! ${error.message}`;
 
                         return (
-                            <div className="characters">
+                            <div className="boards">
                                 {data.allBoards.map(board => (
                                     <Link to={`/boards/${board.id}`}>
                                         <div className="board">
@@ -43,12 +42,13 @@ function BoardsList() {
                                         </div>
                                     </Link>
                                 ))}
+                                <div className="board board-add">
+                                    <p>Add new one</p>
+                                </div>
                             </div>
                         );
                     }}
                 </Query>
-
-            </header>
         </div>
     );
 }
