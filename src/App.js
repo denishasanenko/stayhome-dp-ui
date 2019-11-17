@@ -15,8 +15,20 @@ import {InMemoryCache} from "apollo-cache-inmemory";
 import { setContext } from 'apollo-link-context'
 import { ApolloProvider } from 'react-apollo'
 import jwt from 'jsonwebtoken';
+import 'toastr/build/toastr.css'
 
 function App() {
+
+    const defaultOptions = {
+        watchQuery: {
+            fetchPolicy: 'no-cache',
+            errorPolicy: 'ignore',
+        },
+        query: {
+            fetchPolicy: 'no-cache',
+            errorPolicy: 'all',
+        },
+    }
 
   const httpLink = createHttpLink({ uri: 'http://localhost:4000/graphql' });
 
@@ -33,7 +45,8 @@ function App() {
 
   const client = new ApolloClient({
     link: authLink.concat(httpLink),
-    cache: new InMemoryCache()
+    cache: new InMemoryCache(),
+    defaultOptions: defaultOptions
   });
 
   const logOut = (event) => {

@@ -1,0 +1,16 @@
+.Main {
+    display: flex;
+    justify-content: center;
+    margin-top: 100px;
+}
+
+.form-wrapper {
+    width: 402px;
+    min-height: 180px;
+    background: #FFFFFF;
+    border: 1px solid #CCCCCC;
+    border-radius: 3px;
+    box-shadow: 0 10px 10px rgba(0,0,0,0.1);
+    float: left;
+    margin-right: 20px;
+}

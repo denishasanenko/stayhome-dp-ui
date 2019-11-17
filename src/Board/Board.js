@@ -1,57 +1,95 @@
 import React from 'react';
 import { Link, useParams } from 'react-router-dom';
-import {Query} from "@apollo/react-components";
 import {gql} from "apollo-boost";
+import {useMutation, useQuery} from 'react-apollo'
 import "./board.css"
+import AddColumnCard from './AddColumnCard';
+import toastr from 'toastr'
+
+const ADD_CARD_MUTATION = gql`
+    mutation postCard($input: PostBoardCardInput!) {
+        postCard(input: $input) {
+            text
+        }
+    }
+`;
+const GET_BOARD = gql`
+    query getBoard($id: String!) {
+        getBoard(id: $id) {
+            id
+            name
+            description
+            columns {
+                title
+                color
+                cards {
+                    text
+                }
+            }
+            posted_by {
+                email
+            }
+        }
+    }
+`;
 
 function Board() {
 
-    const GET_CHARACTERS = gql`
-        query getBoard($id: String!) {
-            getBoard(id: $id) {
-                id
-                name
-                description
-                columns {
-                    title
-                    color
-                }
-                posted_by {
-                    email
-                }
-            }
-        }
-    `;
-
     let { id } = useParams();
 
-    console.log(id);
+    let { loading, error, data, refetch } = useQuery(GET_BOARD, {
+        variables: {id: id}
+    });
+
+    let [addCardMutation, addData] = useMutation(ADD_CARD_MUTATION);
+
+
+    const addCard = async function (card) {
+        await addCardMutation(
+            { variables: {input: { ...card, board_id: id }}}
+        );
+        refetch();
+    }
+
+    if (addData.error) {
+        toastr.options = {
+            positionClass : 'toast-top-full-width',
+            hideDuration: 300,
+            timeOut: 6000,
+            closeButton: true
+        };
+        toastr.clear();
+        setTimeout(() => toastr.error(addData.error.networkError.result.errors[0].message), 300);
+
+    }
+
+    if (loading) return null;
+    if (error) return `Error! ${error}`;
 
     return (
         <div className="Board">
-                <Link to="/list">Back boards list</Link>
-                <Query query={GET_CHARACTERS} variables={{id: id}}>
-                    {({ loading, error, data }) => {
-                        if (loading) return "Loading...";
-                        if (error) return `Error! ${error.message}`;
+            <Link to="/list">Back boards list</Link>
+            <p>
+                {data.getBoard.name}
+            </p>
 
-                        return (
-                            <div className="characters">
-                                <p>
-                                    Board page {data.getBoard.name}
-                                </p>
+            <div className="wrapper">
+                <div className="canvas clearfix" style={{width: `${data.getBoard.columns.length * 422}px`}}>
+                    {data.getBoard.columns.map((column) => {
+                        return <div className="column">
+                            <p><b>{column.title}</b></p>
 
-                                <div className="canvas">
-                                    {data.getBoard.columns.map((column) => {
-                                        return <div className="column">
-                                            <p><b>{column.title}</b></p>
-                                        </div>
-                                    })}
+                            <AddColumnCard column={column.title} onAdd={addCard} />
+
+                            {column.cards.map((card) => {
+                                return <div className="card">
+                                    <p>{card.text}</p>
                                 </div>
-                            </div>
-                        );
-                    }}
-                </Query>
+                            })}
+                        </div>
+                    })}
+                </div>
+            </div>
         </div>
     );
 }

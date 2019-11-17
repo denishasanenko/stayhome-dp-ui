@@ -1,8 +1,9 @@
 import React, {useState} from 'react';
-import {Link, useHistory} from "react-router-dom";
+import {useHistory} from "react-router-dom";
 import { useMutation } from "react-apollo";
 import { gql } from "apollo-boost";
 import jwt from "jsonwebtoken";
+import "./main.css"
 
 const LOGIN_MUTATION = gql`
     mutation signIn($input: SignInput!) {
@@ -49,25 +50,25 @@ function Main() {
 
     return (
             <div className="Main">
+                <div className="form-wrapper">
+                    <img src="/logo.png" className="App-logo" alt="logo" />
+                    <h1>Vedrospective</h1>
                     <form onSubmit={submitForm}>
                         <div>
                             <label>
-                                <input type="text" onChange={event => setEmail(event.target.value)} />
-                                E-mail
-                            </label>
+                                E-mail:
+                                <input type="email" required onChange={event => setEmail(event.target.value)} />
+                            </label><br/>
                             <label>
-                                <input type="password" onChange={event => setPassword(event.target.value)} />
-                                Password
-                            </label>
+                                Password:
+                                <input type="password" required onChange={event => setPassword(event.target.value)} />
+                            </label><br/>
                             <label>
                                 <button>Log in</button>
                             </label>
                         </div>
                     </form>
-                    <p>
-                        Main page
-                    </p>
-                    <Link to="/board">Go to board</Link>
+                </div>
             </div>
     );
 
