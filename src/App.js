@@ -28,7 +28,7 @@ function App() {
             fetchPolicy: 'no-cache',
             errorPolicy: 'all',
         },
-    }
+    };
 
   const httpLink = createHttpLink({ uri: 'http://localhost:4000/graphql' });
 
@@ -63,7 +63,7 @@ function App() {
               <img src="/logo.png" className="App-logo" alt="logo" />
           </div>
           <div>
-              <p onClick={logOut}>Log out</p>
+              <p className="signOut" onClick={logOut}>Log out</p>
           </div>
       </header>
       <ApolloProvider client={client}>

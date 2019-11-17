@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useState} from 'react';
 import { Link, useParams } from 'react-router-dom';
 import {gql} from "apollo-boost";
 import {useMutation, useQuery} from 'react-apollo'
@@ -23,6 +23,7 @@ const GET_BOARD = gql`
                 title
                 color
                 cards {
+                    id
                     text
                 }
             }
@@ -36,6 +37,8 @@ const GET_BOARD = gql`
 function Board() {
 
     let { id } = useParams();
+    let [actionAdding, setActionAdding] = useState(false);
+    let [parentForAction, setParentForAction] = useState('');
 
     let { loading, error, data, refetch } = useQuery(GET_BOARD, {
         variables: {id: id}
@@ -46,9 +49,17 @@ function Board() {
 
     const addCard = async function (card) {
         await addCardMutation(
-            { variables: {input: { ...card, board_id: id }}}
+            { variables: {input: { ...card, board_id: id, parent: parentForAction }}}
         );
+        setActionAdding(false);
         refetch();
+    }
+
+    const addAction = function (event, card) {
+        event.preventDefault();
+        console.log(card);
+        setParentForAction(card.id);
+        setActionAdding(true);
     }
 
     if (addData.error) {
@@ -79,11 +90,14 @@ function Board() {
                         return <div className="column">
                             <p><b>{column.title}</b></p>
 
-                            <AddColumnCard column={column.title} onAdd={addCard} />
+                            { column.title !== 'Actions' || actionAdding ? <AddColumnCard column={column.title} onAdd={addCard} /> : '' }
 
                             {column.cards.map((card) => {
                                 return <div className="card">
-                                    <p>{card.text}</p>
+                                    <p>
+                                        {card.text}
+                                        <button onClick={e => {addAction(e, card)}}>+</button>
+                                    </p>
                                 </div>
                             })}
                         </div>

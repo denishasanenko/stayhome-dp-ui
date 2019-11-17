@@ -53,20 +53,18 @@ function Main() {
                 <div className="form-wrapper">
                     <img src="/logo.png" className="App-logo" alt="logo" />
                     <h1>Vedrospective</h1>
-                    <form onSubmit={submitForm}>
-                        <div>
-                            <label>
-                                E-mail:
-                                <input type="email" required onChange={event => setEmail(event.target.value)} />
-                            </label><br/>
-                            <label>
-                                Password:
-                                <input type="password" required onChange={event => setPassword(event.target.value)} />
-                            </label><br/>
-                            <label>
-                                <button>Log in</button>
-                            </label>
-                        </div>
+                    <form action="#" onSubmit={submitForm}>
+                        <label>
+                            E-mail:
+                            <input type="email" required onChange={event => setEmail(event.target.value)} />
+                        </label><br/>
+                        <label>
+                            Password:
+                            <input type="password" required onChange={event => setPassword(event.target.value)} />
+                        </label><br/>
+                        <label>
+                            <button>Log in</button>
+                        </label>
                     </form>
                 </div>
             </div>

@@ -23,32 +23,42 @@
 }
 
 .add-new {
-    border: none;
-    font-weight: bold;
-    color: #AAAAAA;
-    text-align: center;
-    cursor: pointer;
+border: none;
+font-weight: bold;
+color: #AAAAAA;
+text-align: center;
+cursor: pointer;
+}
+
+.add-new p{
+    margin: 0;
+    padding: 12px;
+    border-radius: 6px;
+}
+
+.add-new p:hover{
+    background: #EEEEEE;
 }
 
 .add-new-edit{
-    display: flex;
-    flex-direction: column;
+display: flex;
+flex-direction: column;
 }
 
 .add-new-edit > div{
-    outline: none;
-    padding: 12px;
-    float: left;
+outline: none;
+padding: 12px;
+float: left;
 }
 
 .add-new-edit button{
-    background-color: #4680FF;
-    color: #FFFFFF;
-    padding: 12px;
-    border: none;
-    border-radius: 6px;
-    cursor: pointer;
-    float: right;
+background-color: #4680FF;
+color: #FFFFFF;
+padding: 12px;
+border: none;
+border-radius: 6px;
+cursor: pointer;
+float: right;
 }
 
 .wrapper {

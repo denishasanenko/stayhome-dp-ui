@@ -6,9 +6,10 @@ class AddColumnCard extends React.Component {
         super(props);
         this.state = {
             column: props.column,
-            editMode: false,
+            editMode: props.column === 'Actions',
             text: ''
         }
+        console.log(props.column);
         this.addCardEmiter = props.onAdd;
         this.addCard = this.addCardHandler.bind(this, props.column);
     }
