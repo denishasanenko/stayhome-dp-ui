@@ -51,3 +51,22 @@ header img {
 .toast-error {
   background-color: #FB617F !important;
 }
+
+.btn {
+  width: 24px;
+  height: 24px;
+  padding: 3px;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  opacity: 0.5;
+}
+
+.btn:hover {
+  opacity: 1;
+}
+
+.btn img{
+  width: 18px;
+  height: 18px;
+}

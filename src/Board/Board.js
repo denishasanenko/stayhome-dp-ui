@@ -5,6 +5,7 @@ import {useMutation, useQuery} from 'react-apollo'
 import "./board.css"
 import AddColumnCard from './AddColumnCard';
 import toastr from 'toastr'
+import actionItemIcon from '../images/idea.png';
 
 const ADD_CARD_MUTATION = gql`
     mutation postCard($input: PostBoardCardInput!) {
@@ -96,7 +97,9 @@ function Board() {
                                 return <div className="card">
                                     <p>
                                         {card.text}
-                                        <button onClick={e => {addAction(e, card)}}>+</button>
+                                        <button className="btn" onClick={e => {addAction(e, card)}}>
+                                            <img src={actionItemIcon} />
+                                        </button>
                                     </p>
                                 </div>
                             })}
