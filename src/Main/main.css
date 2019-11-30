@@ -42,3 +42,9 @@
     float: right;
     margin: 6px 24px;
 }
+
+.form-wrapper form > label > button[disabled]{
+    opacity: 0.5;
+    cursor: not-allowed;
+    pointer-events: none;
+}

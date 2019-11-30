@@ -15,6 +15,7 @@ import {ApolloClient} from "apollo-client";
 import {InMemoryCache} from "apollo-cache-inmemory";
 import { setContext } from 'apollo-link-context'
 import { ApolloProvider } from 'react-apollo'
+import Header from './Header/Header'
 import jwt from 'jsonwebtoken';
 import 'toastr/build/toastr.css'
 
@@ -50,25 +51,11 @@ function App() {
     defaultOptions: defaultOptions
   });
 
-  const logOut = (event) => {
-      event.stopPropagation();
-      localStorage.removeItem('jwt');
-  }
-
-
   return (
     <div className="App">
-      <header>
-          <div></div>
-          <div>
-              <img src="/logo.png" className="App-logo" alt="logo" />
-          </div>
-          <div>
-              <p className="signOut" onClick={logOut}>Log out</p>
-          </div>
-      </header>
       <ApolloProvider client={client}>
         <HashRouter>
+          <Header />
           <Switch>
             <PrivateRoute path="/boards/:id">
               <Board />

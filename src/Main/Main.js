@@ -13,6 +13,7 @@ const LOGIN_MUTATION = gql`
 `;
 
 function Main() {
+    const [inProcess, setInProcess] = useState(false);
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
 
@@ -34,6 +35,8 @@ function Main() {
     }
 
     if (signData.error) {
+        const errorMessage = signData.error.graphQLErrors[0].message;
+        signData.error = null;
         toastr.options = {
             positionClass : 'toast-top-full-width',
             hideDuration: 300,
@@ -41,18 +44,22 @@ function Main() {
             closeButton: true
         };
         toastr.clear();
-        setTimeout(() => toastr.error(signData.error.graphQLErrors[0].message), 300);
+        setTimeout(() => {
+            if (inProcess) {
+                setInProcess(false);
+            }
+            toastr.error(errorMessage);
+        }, 300);
     }
 
     if (signData.data) {
         localStorage.setItem('jwt', signData.data.signIn);
-        console.log(signData.data);
         history.push('/boards')
     }
 
     const submitForm = event => {
         event.preventDefault();
-        console.log(email, password);
+        setInProcess(true);
         loginUser({ variables: {input: { email, password }}});
     }
 
@@ -71,7 +78,7 @@ function Main() {
                             <input type="password" required onChange={event => setPassword(event.target.value)} />
                         </label><br/>
                         <label>
-                            <button>Sign in</button>
+                            <button disabled={inProcess}>Sign in</button>
                         </label>
                         <label>
                             <Link to="/sign-up">Sign up</Link>
