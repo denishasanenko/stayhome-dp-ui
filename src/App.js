@@ -3,6 +3,7 @@ import './App.css';
 import Board from "./Board/Board";
 import BoardsList from "./BoardsList/BoardsList";
 import Main from "./Main/Main";
+import SignUp from "./SignUp/SignUp";
 import {
   Switch,
   Route,
@@ -30,7 +31,7 @@ function App() {
         },
     };
 
-  const httpLink = createHttpLink({ uri: 'http://localhost:4000/graphql' });
+  const httpLink = createHttpLink({ uri: 'https://ff-vedrospective-api.herokuapp.com/graphql' });
 
   const authLink = setContext((_, { headers }) => {
     const token = localStorage.getItem('jwt');
@@ -75,6 +76,9 @@ function App() {
             <PrivateRoute path="/boards">
               <BoardsList />
             </PrivateRoute>
+            <Route path="/sign-up">
+              <SignUp />
+            </Route>
             <Route path="/">
               <Main />
             </Route>

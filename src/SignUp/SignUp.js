@@ -3,12 +3,12 @@ import {Link, useHistory} from "react-router-dom";
 import { useMutation } from "react-apollo";
 import { gql } from "apollo-boost";
 import jwt from "jsonwebtoken";
-import "./main.css"
+import "./SignUp.css"
 import toastr from "toastr";
 
 const LOGIN_MUTATION = gql`
-    mutation signIn($input: SignInput!) {
-        signIn(input: $input)
+    mutation signUp($input: SignInput!) {
+        signUp(input: $input)
     }
 `;
 
@@ -57,28 +57,27 @@ function Main() {
     }
 
     return (
-            <div className="Main">
-                <div className="form-wrapper">
-                    <img src="/logo.png" className="App-logo" alt="logo" />
-                    <h1>Vedrospective</h1>
-                    <form action="#" onSubmit={submitForm}>
-                        <label>
-                            E-mail:
-                            <input type="email" required onChange={event => setEmail(event.target.value)} />
-                        </label><br/>
-                        <label>
-                            Password:
-                            <input type="password" required onChange={event => setPassword(event.target.value)} />
-                        </label><br/>
-                        <label>
-                            <button>Sign in</button>
-                        </label>
-                        <label>
-                            <Link to="/sign-up">Sign up</Link>
-                        </label>
-                    </form>
-                </div>
+        <div className="Main">
+            <div className="form-wrapper">
+                <h1>Sign up</h1>
+                <form action="#" onSubmit={submitForm}>
+                    <label>
+                        E-mail:
+                        <input type="email" required onChange={event => setEmail(event.target.value)} />
+                    </label><br/>
+                    <label>
+                        Password:
+                        <input type="password" required onChange={event => setPassword(event.target.value)} />
+                    </label><br/>
+                    <label>
+                        <button>Sign up</button>
+                    </label>
+                    <label>
+                        <Link to="/">Sign in</Link>
+                    </label>
+                </form>
             </div>
+        </div>
     );
 
 }
