@@ -1,61 +1,38 @@
-import React from 'react';
+import React, {useState, useEffect} from 'react';
 
-class AddColumnCard extends React.Component {
+function AddColumnCard(props) {
 
-    constructor(props) {
-        super(props);
-        this.state = {
-            column: props.column,
-            editMode: props.column === 'Actions',
-            text: ''
+    let [editMode, setEditMode] = useState(props.column === 'Actions');
+    let [text, setText] = useState('');
+    let textInput;
+
+    useEffect(() => {
+        if (textInput) {
+            textInput.focus();
         }
-        console.log(props.column);
-        this.addCardEmiter = props.onAdd;
-        this.addCard = this.addCardHandler.bind(this, props.column);
-    }
+    });
 
-    toggleEditMode(mode) {
-        console.log(this);
-        this.setState({
-            ...this.state,
-            editMode: mode
+    const addCardHandler = () => {
+        props.onAdd({
+            column: props.column,
+            text
         });
+        setEditMode(false);
     };
 
-    setText(text) {
-        console.log(text, 'render');
-        this.setState({
-            ...this.state,
-            text
-        })
-    };
-
-    addCardHandler(column, text) {
-        this.setState({
-            ...this.state,
-            text: ''
-        })
-        this.addCardEmiter({
-            column,
-            text
-        })
-        this.toggleEditMode(false);
-    }
-
-    render() {
-        const {editMode} = this.state;
-        return (
-            <div className="AddColumnBoard">
-                <div className={editMode ? 'hidden' : 'card add-new'} onClick={() => this.toggleEditMode(true)}>
+    return (
+        <div className="AddColumnBoard">
+            {editMode ?
+                <div className='card add-new-edit'>
+                    <div tabIndex="-1" contentEditable={true} ref={(input) => textInput = input}  onInput={e => setText(e.currentTarget.innerHTML)}></div>
+                    <button onClick={() => addCardHandler()}>ADD</button>
+                </div> :
+                <div className='card add-new' onClick={() => {setEditMode(true); console.log(textInput)}}>
                     <p>Add card</p>
                 </div>
-                <div className={!editMode ? ' hidden' : 'card add-new-edit'}>
-                    <div contentEditable={true} onInput={e => this.setText(e.currentTarget.innerHTML)}></div>
-                    <button onClick={() => this.addCard(this.state.text)}>ADD</button>
-                </div>
-            </div>
-        );
-    }
+            }
+        </div>
+    );
 }
 
 export default AddColumnCard;

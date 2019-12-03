@@ -26,6 +26,9 @@ const GET_BOARD = gql`
                 cards {
                     id
                     text
+                    posted_by {
+                        email
+                    }
                 }
             }
             posted_by {
@@ -75,8 +78,12 @@ function Board() {
 
     }
 
-    if (loading) return null;
-    if (error) return `Error! ${error}`;
+    if (loading) {
+        return null;
+    }
+    if (error) {
+        return `Error! ${error}`;
+    }
 
     return (
         <div className="Board">
@@ -96,10 +103,13 @@ function Board() {
                             {column.cards.map((card) => {
                                 return <div className="card">
                                     <p>
-                                        {card.text}
+                                        {card.posted_by.email}
                                         <button className="btn" onClick={e => {addAction(e, card)}}>
-                                            <img src={actionItemIcon} />
+                                            <img alt="Action item" src={actionItemIcon} />
                                         </button>
+                                    </p>
+                                    <p>
+                                        {card.text}
                                     </p>
                                 </div>
                             })}

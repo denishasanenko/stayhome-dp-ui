@@ -87,7 +87,7 @@ function BoardsList() {
             <div className="boards">
                 {data.allBoards.map(board => (
                     <div className="board">
-                        <button className="btn remove" onClick={e => removeBoardHandler(board.id)}><img src={removeIcon} /></button>
+                        <button className="btn remove" onClick={e => removeBoardHandler(board.id)}><img alt="Remove" src={removeIcon} /></button>
                         <Link to={`/boards/${board.id}`}><p>{board.name}</p></Link>
                         <p>{board.posted_by.email}</p>
                     </div>
