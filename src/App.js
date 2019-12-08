@@ -32,7 +32,7 @@ function App() {
         },
     };
 
-  const host = window.ENV_VARS.host ? window.ENV_VARS.host : 'http://localhost:4000';
+  const host = window.ENV_VARS ? window.ENV_VARS.host : 'http://localhost:4000';
   const httpLink = createHttpLink({ uri: `${host}/graphql` });
 
   const authLink = setContext((_, { headers }) => {

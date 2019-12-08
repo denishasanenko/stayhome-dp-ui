@@ -24,6 +24,9 @@ const GET_BOARDS_LIST = gql`
             posted_by {
                 email
             }
+            team {
+                name
+            }
         }
     }
 `;
@@ -105,7 +108,7 @@ function BoardsList() {
                 {data.allBoards.map(board => (
                     <div className="board">
                         <p>
-                            {board.posted_by.email}
+                            {board.team ? board.team.name : board.posted_by.email}
                             <button className="btn remove" onClick={e => removeBoardHandler(board.id)}><img alt="Remove" src={removeIcon} /></button>
                         </p>
                         <Link to={`/boards/${board.id}`}><p>{board.name}</p></Link>
