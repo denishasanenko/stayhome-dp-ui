@@ -112,8 +112,6 @@ function BoardsList() {
                             <button className="btn remove" onClick={e => removeBoardHandler(board.id)}><img alt="Remove" src={removeIcon} /></button>
                         </p>
                         <Link to={`/boards/${board.id}`}><p>{board.name}</p></Link>
-                        Total cards: {board.columns.reduce(totalCardsReducer, 0)}
-                        Action items: {board.columns.reduce(actionItemsReducer, 0)}
                     </div>
                 ))}
             </div>
