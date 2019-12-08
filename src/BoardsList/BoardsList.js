@@ -17,6 +17,9 @@ const GET_BOARDS_LIST = gql`
             columns {
                 title
                 color
+                cards {
+                    id
+                }
             }
             posted_by {
                 email
@@ -70,6 +73,20 @@ function BoardsList() {
         removeBoard({ variables: {input: id}});
     };
 
+    const totalCardsReducer = (accumulator, column) => {
+        if (column.title !== 'Actions') {
+            accumulator += column.cards.length;
+        }
+        return accumulator;
+    };
+
+    const actionItemsReducer = (accumulator, column) => {
+        if (column.title === 'Actions') {
+            accumulator += column.cards.length;
+        }
+        return accumulator;
+    };
+
     if (loading) {
         return "Loading...";
     }
@@ -87,9 +104,13 @@ function BoardsList() {
             <div className="boards">
                 {data.allBoards.map(board => (
                     <div className="board">
-                        <button className="btn remove" onClick={e => removeBoardHandler(board.id)}><img alt="Remove" src={removeIcon} /></button>
+                        <p>
+                            {board.posted_by.email}
+                            <button className="btn remove" onClick={e => removeBoardHandler(board.id)}><img alt="Remove" src={removeIcon} /></button>
+                        </p>
                         <Link to={`/boards/${board.id}`}><p>{board.name}</p></Link>
-                        <p>{board.posted_by.email}</p>
+                        Total cards: {board.columns.reduce(totalCardsReducer, 0)}
+                        Action items: {board.columns.reduce(actionItemsReducer, 0)}
                     </div>
                 ))}
             </div>

@@ -8,6 +8,9 @@ app.use(express.static(path.join(__dirname, 'build')));
 app.get('/ping', function (req, res) {
     return res.send('pong');
 });
+app.get('/env.js', function (req, res) {
+    return res.send(`var ENV_VARS = ${JSON.stringify({host: process.env.API_HOST || 'http://localhost:4000'})}`);
+});
 app.get('/*', function (req, res) {
     res.sendFile(path.join(__dirname, 'build', 'index.html'));
 });
