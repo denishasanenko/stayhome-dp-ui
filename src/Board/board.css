@@ -1,3 +1,7 @@
+.Board {
+    padding: 24px;
+}
+
 .column {
     width: 402px;
     min-height: 180px;

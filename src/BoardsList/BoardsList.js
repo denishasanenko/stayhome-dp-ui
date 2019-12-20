@@ -6,6 +6,8 @@ import AddBoard from "../AddBoard/AddBoard";
 import {useMutation, useQuery} from "@apollo/react-hooks";
 import toastr from "toastr";
 import removeIcon from "../images/trash.png";
+import personalBoardIcon from "../images/user-1.png";
+import teamBoardIcon from "../images/users.png";
 
 
 const GET_BOARDS_LIST = gql`
@@ -76,18 +78,9 @@ function BoardsList() {
         removeBoard({ variables: {input: id}});
     };
 
-    const totalCardsReducer = (accumulator, column) => {
-        if (column.title !== 'Actions') {
-            accumulator += column.cards.length;
-        }
-        return accumulator;
-    };
-
-    const actionItemsReducer = (accumulator, column) => {
-        if (column.title === 'Actions') {
-            accumulator += column.cards.length;
-        }
-        return accumulator;
+    const username = (userEmail) => {
+        const username = userEmail.split('@')[0];
+        return username.toUpperCase();
     };
 
     if (loading) {
@@ -107,10 +100,13 @@ function BoardsList() {
             <div className="boards">
                 {data.allBoards.map(board => (
                     <div className="board">
-                        <p>
-                            {board.team ? board.team.name : board.posted_by.email}
-                            <button className="btn remove" onClick={e => removeBoardHandler(board.id)}><img alt="Remove" src={removeIcon} /></button>
-                        </p>
+                        <div className="head">
+                            <img src={board.team ? teamBoardIcon : personalBoardIcon} alt={board.team ? "Team board" : "Personal board"} />
+                            <span>{board.team ? board.team.name : username(board.posted_by.email)}</span>
+                            <span className="right-controls">
+                                <button className="btn remove" onClick={e => removeBoardHandler(board.id)}><img alt="Remove" src={removeIcon} /></button>
+                            </span>
+                        </div>
                         <Link to={`/boards/${board.id}`}><p>{board.name}</p></Link>
                     </div>
                 ))}

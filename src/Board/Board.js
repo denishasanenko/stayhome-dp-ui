@@ -78,6 +78,11 @@ function Board() {
 
     }
 
+    const username = (userEmail) => {
+        const username = userEmail.split('@')[0];
+        return username.toUpperCase();
+    };
+
     if (loading) {
         return null;
     }
@@ -103,7 +108,7 @@ function Board() {
                             {column.cards.map((card) => {
                                 return <div className="card">
                                     <p>
-                                        {card.posted_by.email}
+                                        {username(card.posted_by.email)}
                                         <button className="btn" onClick={e => {addAction(e, card)}}>
                                             <img alt="Action item" src={actionItemIcon} />
                                         </button>
