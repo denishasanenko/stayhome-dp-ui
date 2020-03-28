@@ -9,7 +9,7 @@ app.get('/ping', function (req, res) {
     return res.send('pong');
 });
 app.get('/env.js', function (req, res) {
-    return res.send(`var ENV_VARS = ${JSON.stringify({host: process.env.API_HOST || 'http://localhost:4000'})}`);
+    return res.send(`var ENV_VARS = ${JSON.stringify({host: process.env.API_HOST || 'https://stayhome-dp.herokuapp.com'})}`);
 });
 app.get('/*', function (req, res) {
     res.sendFile(path.join(__dirname, 'build', 'index.html'));
